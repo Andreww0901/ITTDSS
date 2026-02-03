@@ -6,8 +6,8 @@ from matplotlib import rcParams
 
 rcParams["font.family"] = "Times New Roman"
 
-if __name__ == "__main__":
-    # Signing Times Averages with error
+
+def signingPlots(filepath, proto, device):
     colours = ["#ca0020", "#f4a582", "#92c5de", "#0571b0"]
     fig, ax = plt.subplots()
     for noTrustee in range(2, 6):
@@ -15,7 +15,7 @@ if __name__ == "__main__":
         stdDevList = []
         for noRecipient in range(1, 21):
             data = pd.read_csv(
-                f"./RPIDealerData/signingTimes_{noTrustee}Trustee_{noRecipient}Recip.csv",
+                f"./{filepath}/signingTimes_{noTrustee}Trustee_{noRecipient}Recip.csv",
                 header=None,
             )
             data = data[:200]
@@ -43,11 +43,15 @@ if __name__ == "__main__":
         )
     ax.set_xlabel("No. Recipients")
     ax.set_ylabel("Signing Time (ms)")
+    ax.set_axisbelow(True)
+    ax.xaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
+    ax.yaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.legend()
-    plt.title("Signature Computation Time")
-    plt.savefig("./plots/RPISigComputationPlot200.svg", format="svg")
+    plt.title(f"{proto} - Signature Computation Time - {device}")
+    plt.savefig(f"./plots/{filepath}_SignatureComputationPlot.svg", format="svg")
 
-    # Verification Times Averages with error
+
+def verificationPlots(filepath, proto, device):
     colours = ["#ca0020", "#f4a582", "#92c5de", "#0571b0"]
     fig, ax = plt.subplots()
     for noTrustee in range(2, 6):
@@ -55,7 +59,7 @@ if __name__ == "__main__":
         stdDevList = []
         for noRecipient in range(1, 21):
             data = pd.read_csv(
-                f"./RPIDealerData/verificationTimes_{noTrustee}Trustee_{noRecipient}Recip.csv",
+                f"./{filepath}/verificationTimes_{noTrustee}Trustee_{noRecipient}Recip.csv",
                 header=None,
             )
             data = data[:200]
@@ -83,6 +87,20 @@ if __name__ == "__main__":
         )
     ax.set_xlabel("No. Recipients")
     ax.set_ylabel("Verification Time (ms)")
+    ax.set_axisbelow(True)
+    ax.xaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
+    ax.yaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.legend()
-    plt.title("Signature Verification Time")
-    plt.savefig("./plots/RPIVerificationPlot200.svg", format="svg")
+    plt.title(f"{proto} - Signature Verification Time - {device}")
+    plt.savefig(f"./plots/{filepath}_VerificationPlot.svg", format="svg")
+
+
+if __name__ == "__main__":
+    signingPlots("MACDealerData", "Dealer", "2025 M5 MacBook Pro")
+    verificationPlots("MACDealerData", "Dealer", "2025 M5 MacBook Pro")
+    signingPlots("MACNonDealerData", "Non-Dealer", "2025 M5 MacBook Pro")
+    verificationPlots("MACNonDealerData", "Non-Dealer", "2025 M5 MacBook Pro")
+    signingPlots("RPIDealerData", "Dealer", "Raspberry Pi 4 (4GB)")
+    verificationPlots("RPIDealerData", "Dealer", "Raspberry Pi 4 (4GB)")
+    signingPlots("RPINonDealerData", "Non-Dealer", "Raspberry Pi 4 (4GB)")
+    verificationPlots("RPINonDealerData", "Non-Dealer", "Raspberry Pi 4 (4GB)")

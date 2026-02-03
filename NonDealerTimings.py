@@ -73,9 +73,9 @@ if __name__ == "__main__":
     for i in range(noTrustees):
         trusteePartialSignatures[i] = {}
         set = trusteeFunctionSets[i]
+        sig_start_time = process_time_ns()
         for t in range(noTrustees):
             signature = []
-            sig_start_time = process_time_ns()
             for function in set[t]:
                 signature.append(
                     (
@@ -83,8 +83,8 @@ if __name__ == "__main__":
                         (function[1][0] * messageSize + function[1][1]) % p,
                     )
                 )
-            sig_end_time = process_time_ns()
             trusteePartialSignatures[i][t] = signature
+        sig_end_time = process_time_ns()
         cumuSigTime += sig_end_time - sig_start_time
 
     # print(cumuSigTime, end="\n\n")
