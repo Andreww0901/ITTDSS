@@ -6,8 +6,7 @@ from time import process_time_ns
 from shamirsSecretSharing import createShares, reconstructSecret
 from sieveOfEratosthenes import sieveOfEratosthenes
 
-message = "Newcastle University - School of Computing"
-messageSize = len(message) ** 2
+messageSize = 1764
 
 p = sieveOfEratosthenes(messageSize)[-1]
 
