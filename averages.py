@@ -5,6 +5,7 @@ import pandas as pd
 from matplotlib import rcParams
 
 rcParams["font.family"] = "Times New Roman"
+rcParams.update({"font.size": 18})
 
 
 def signingPlots(filepath, proto, device):
@@ -47,7 +48,6 @@ def signingPlots(filepath, proto, device):
     ax.xaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.yaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.legend()
-    plt.title(f"{proto} - Signature Computation Time - {device}")
     plt.savefig(f"./plots/{filepath}_SignatureComputationPlot.svg", format="svg")
 
 
@@ -91,7 +91,6 @@ def verificationPlots(filepath, proto, device):
     ax.xaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.yaxis.grid(color="gray", linestyle="dashed", alpha=0.25)
     ax.legend()
-    plt.title(f"{proto} - Signature Verification Time - {device}")
     plt.savefig(f"./plots/{filepath}_VerificationPlot.svg", format="svg")
 
 
